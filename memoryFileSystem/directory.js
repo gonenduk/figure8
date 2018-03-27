@@ -56,6 +56,8 @@ class Directory {
     }
   }
 
+  // ***** sub path functions
+
   getCreatePath(path) {
     const nextPathPos = path.indexOf('/') + 1;
 
@@ -96,7 +98,7 @@ class Directory {
     }
   }
 
-  deleteEmptyPath(path) {
+  deleteFileAndPath(path, name) {
     const nextPathPos = path.indexOf('/') + 1;
 
     if (nextPathPos > 0) {
@@ -110,12 +112,16 @@ class Directory {
       }
 
       // Check if sub dir is empty and delete it
-      const isSubDirEmpty = this.directories[subDirName].deleteEmptyPath(nextPath);
+      const isSubDirEmpty = this.directories[subDirName].deleteFileAndPath(nextPath, name);
       if (isSubDirEmpty) {
         delete this.directories[subDirName];
       }
+    } else {
+      // Last directory in path found. Delete file
+      this.deleteFile(name);
     }
 
+    // Return if current dir is empty to continue the chain
     return this.isEmpty();
   }
 

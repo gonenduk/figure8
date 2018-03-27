@@ -20,9 +20,7 @@ class Drive {
     // Convert to path and name
     const path = fullPath.substr(0, fullPath.lastIndexOf('/'));
     const name = fullPath.split('/').pop();
-    const directory = this.root.getPath(path);
-    directory.deleteFile(name);
-    this.root.deleteEmptyPath(path);
+    this.root.deleteFileAndPath(path, name);
   }
 
   list(path) {
